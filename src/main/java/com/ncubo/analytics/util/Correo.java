@@ -1,5 +1,10 @@
 package com.ncubo.analytics.util;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -20,11 +25,11 @@ public class Correo {
 	private final String PASSWORD = "Asdasdasd1!";
 	private String asunto = "Prueba correo";
 	
-	public void enviarCorreo() throws AddressException, MessagingException
+	public void enviarCorreo() throws AddressException, MessagingException, IOException
 	{
-		String para = "dalaianxd@gmail.com";
+		String para = "v.centeno15@gmail.com";
 		String copiaA = "vcenteno@cecropiasolutions.com";
-		String emailBody = "";
+		String emailBody = getTemplate();
 		
 		mailServerProperties = System.getProperties();
 		mailServerProperties.put("mail.smtp.port", "587");
@@ -43,6 +48,22 @@ public class Correo {
 
 		transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 		transport.close();
+	}
+	
+	private String getTemplate() throws IOException
+	{
+		
+		File archivo = new File ("src/main/resources/generated-template.html");
+        FileReader fr = new FileReader (archivo);
+        BufferedReader br = new BufferedReader(fr);
+        StringBuilder stringBuilder = new StringBuilder();
+         
+        String linea;
+        while((linea=br.readLine())!= null)
+          stringBuilder.append(linea);
+         
+        br.close();
+        return stringBuilder.toString();
 	}
 
 }

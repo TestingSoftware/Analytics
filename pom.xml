@@ -1,45 +1,156 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.ncubo</groupId>
-  <artifactId>Analytics</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <properties>
-	<project.http.version>1.19.0</project.http.version>
-	<project.oauth.version>1.19.0</project.oauth.version>
-  </properties>
-  
+  <parent>
+    <groupId>com.google</groupId>
+    <artifactId>google</artifactId>
+    <version>5</version>
+  </parent>
+  <groupId>com.google.apis-samples</groupId>
+  <artifactId>analytics-cmdline-sample</artifactId>
+  <version>1</version>
+  <name>Example for the Analytics API v3 using JSON.</name>
+
+  <url>http://code.google.com/p/google-api-java-client/</url>
+
+  <issueManagement>
+    <system>code.google.com</system>
+    <url>http://code.google.com/p/google-api-java-client/issues/list</url>
+  </issueManagement>
+
+  <inceptionYear>2012</inceptionYear>
+
+  <prerequisites>
+    <maven>2.0.9</maven>
+  </prerequisites>
+
+  <scm>
+    <connection>scm:hg:https://samples.google-api-java-client.googlecode.com/hg/</connection>
+    <developerConnection>scm:hg:https://samples.google-api-java-client.googlecode.com/hg/</developerConnection>
+    <url>http://code.google.com/p/google-api-java-client/source/browse/?repo=samples</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>api.nickm</id>
+      <name>Victor C</name>
+      <email>vcenteno@cecropiasolutions.com</email>
+      <organization>Ncubo</organization>
+      <organizationUrl>http://www.google.com</organizationUrl>
+      <roles>
+        <role>owner</role>
+        <role>developer</role>
+      </roles>
+      <timezone>0</timezone>
+    </developer>
+  </developers>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>com.google.api.services.samples.analytics.cmdline.HelloAnalyticsApiSample</mainClass>
+          <systemProperties>
+            <systemProperty>
+              <key>java.util.logging.config.file</key>
+              <value>logging.properties</value>
+            </systemProperty>
+          </systemProperties>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <configLocation>../checkstyle.xml</configLocation>
+          <consoleOutput>true</consoleOutput>
+          <failOnViolation>false</failOnViolation>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+  </build>
   <dependencies>
-	<dependency>
-		<groupId>javax.mail</groupId>
- 		<artifactId>mail</artifactId>
- 		<version>1.4.7</version>
-	</dependency>
-	<dependency>
-		<groupId>javax.mail</groupId>
-		<artifactId>javax.mail-api</artifactId>
-		<version>1.5.2</version>
-	</dependency>
-	<dependency>
-		<groupId>com.google.apis</groupId>
-		<artifactId>google-api-services-analytics</artifactId>
-		<version>v3-rev98-1.19.0</version>
-	</dependency>
-	<dependency>
-		<groupId>com.google.http-client</groupId>
-		<artifactId>google-http-client-jackson2</artifactId>
-		<version>${project.http.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>com.google.oauth-client</groupId>
-		<artifactId>google-oauth-client-jetty</artifactId>
-		<version>${project.oauth.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.testng</groupId>
-		<artifactId>testng</artifactId>
-		<version>6.8</version>
-		<scope>test</scope>
-	</dependency>
+   <dependency>
+        <groupId>org.apache.velocity</groupId>
+        <artifactId>velocity</artifactId>
+        <version>1.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-analytics</artifactId>
+      <version>v3-rev98-1.19.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client-jackson2</artifactId>
+      <version>${project.http.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.oauth-client</groupId>
+      <artifactId>google-oauth-client-jetty</artifactId>
+      <version>${project.oauth.version}</version>
+    </dependency>
+    <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.12</version>
+</dependency>
+
+    <dependency>
+    <groupId>javax.mail</groupId>
+    <artifactId>javax.mail-api</artifactId>
+    <version>1.5.5</version>
+</dependency>
+    <dependency>
+ <groupId>javax.mail</groupId>
+ <artifactId>mail</artifactId>
+ <version>1.4.7</version>
+</dependency>
   </dependencies>
+  <properties>
+    <project.http.version>1.19.0</project.http.version>
+    <project.oauth.version>1.19.0</project.oauth.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 </project>

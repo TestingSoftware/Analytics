@@ -1,0 +1,50 @@
+  <!DOCTYPE html>
+  <html lang = "es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Nimbus Statistics Email">
+        <meta name="author" content="Ncubo Ideas SA">
+        <title>Nimbus Statistics report</title>
+        <link rel="shortcut icon" href="">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+        <style>body{padding-top:50px;}.starter-template{padding:40px 15px;text-align:div;}</style>
+
+    <!--[if IE]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+
+
+    <body>
+      <div class = "container">
+      <B>Estadisticas!</B>
+      
+      <br/>
+        Este email es auto generado si desea obtener información puede contactarse con nuestro equipo.
+      <br/>
+    
+      #set( $count = 1 )  
+      <table class = "table table-striped">
+       <tr>
+              <th>Page views</th>
+              <th>Users</th>
+              <th>Sessions</th>
+          </tr>
+        #foreach( $empresa in $empresas )
+          <tr>
+            <td>$empresa.col0</td>
+            <td>$empresa.col1</td>
+            <td>$empresa.col2</td>
+          </tr>
+          #set( $count = $count + 1 )
+        #end
+      </table>
+ 
+      </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    </body>
+  </html>
