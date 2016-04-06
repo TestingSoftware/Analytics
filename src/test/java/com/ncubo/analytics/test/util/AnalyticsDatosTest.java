@@ -13,4 +13,11 @@ public class AnalyticsDatosTest {
 		analytics = new AnalyticsDatos("newBikes/");
 		analytics.obtenerSesionesUsuarios();
 	}
+	
+	@Test
+	public void analyticsDatos() throws Exception
+	{
+		analytics = new AnalyticsDatos("newBikes/");
+		System.out.println(analytics.obtenerDatosPrincipales());
+	}
 }

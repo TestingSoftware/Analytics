@@ -78,6 +78,16 @@ public class AnalyticsDatos {
 		GaData gaData = obtenerSesionesUsuarios(analytics);
 		return printGaData(gaData);
 	}
+	
+	/**
+	 * Tipo business, //TODO esto no debe ir aquí o está mal
+	 * @throws IOException 
+	 */
+	public List<Map<String, String>> obtenerDatosPrincipales() throws IOException
+	{	
+		GaData gaData = obtenerDatosPrincipales(analytics);
+		return printGaData(gaData);
+	}
 
 	/** Authorizes the installed application to access user's protected data. */
 	private Credential authorize() throws Exception {
@@ -122,6 +132,15 @@ public class AnalyticsDatos {
 				"2016-03-28", // End date.
 				"ga:users, ga:sessions") // Metrics.
 				.setDimensions("ga:pagePath")
+				.setFilters("ga:pagepath=~^/UI/"+empresaFiltrar+".*")
+				.execute();
+	}
+	
+	private GaData obtenerDatosPrincipales(Analytics analytics) throws IOException {
+		return analytics.data().ga().get("ga:" + TABLE_ID, // Table Id. ga: + profile id.
+				"2015-01-01", // Start date.
+				"2016-03-28", // End date.
+				"ga:users, ga:sessions, ga:pageviews, ga:avgSessionDuration, ga:bounceRate, ga:percentNewSessions") // Metrics.
 				.setFilters("ga:pagepath=~^/UI/"+empresaFiltrar+".*")
 				.execute();
 	}
