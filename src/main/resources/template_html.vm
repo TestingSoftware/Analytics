@@ -17,7 +17,6 @@
     <![endif]-->
     </head>
 
-
     <body>
       <div class = "container">
       <B>Estadisticas!</B>
@@ -42,7 +41,31 @@
           #set( $count = $count + 1 )
         #end
       </table>
- 
+      <br>
+      <br>
+      
+      #set( $count = 1 )  
+        <table class="table table-striped">
+            <tr>
+                <th>Users</th>
+                <th>Sessions</th>
+                <th>PageViews</th>
+                <th>Avg Session Duration</th>
+                <th>Bounce Rate</th>
+                <th>%New Sessions</th>
+            </tr>
+            #foreach($dato in $datosResumen)
+            <tr>
+                <td>$dato.col0</td>
+                <td>$dato.col1</td>
+                <td>$dato.col2</td>
+                <td>$dato.col3</td>
+                <td>$dato.col4</td>
+                <td>$dato.col5</td>
+            </tr>
+            #set( $count = $count + 1 )
+            #end
+        </table>
       </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

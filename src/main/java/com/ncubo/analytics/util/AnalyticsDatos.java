@@ -165,7 +165,7 @@ public class AnalyticsDatos {
 			for(List<String> fila : results.getRows())
 			{
 				datos = new HashMap<String, String>();
-				for(int i = 0; i < 3; i++)
+				for(int i = 0; i < fila.size(); i++)
 				{
 					datos.put("col" + i, fila.get(i));
 				}

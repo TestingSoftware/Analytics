@@ -10,8 +10,8 @@ public class AnalyticsDatosTest {
 	@Test
 	public void analytics() throws Exception
 	{
-		analytics = new AnalyticsDatos("newBikes/");
-		analytics.obtenerSesionesUsuarios();
+		//analytics = new AnalyticsDatos("newBikes/");
+		//analytics.obtenerSesionesUsuarios();
 	}
 	
 	@Test

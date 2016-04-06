@@ -23,14 +23,17 @@ public class DataToEmail
        VelocityEngine filler = new VelocityEngine();
        filler.init();
        
-       List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+       List<Map<String, String>> listaSesUs = new ArrayList<Map<String, String>>();
+       List<Map<String, String>> listaDatPrinc = new ArrayList<Map<String, String>>();
        Map<String, String> map = new HashMap<String, String>();
        
        AnalyticsDatos analitycsData = new AnalyticsDatos("pagepath=~^/UI/newbikes.*");
-       list = analitycsData.obtenerSesionesUsuarios();
+       listaSesUs = analitycsData.obtenerSesionesUsuarios();
+       listaDatPrinc = analitycsData.obtenerDatosPrincipales();
        
        VelocityContext context = new VelocityContext();
-       context.put("empresas", list);
+       context.put("empresas", listaSesUs);
+       context.put("datosResumen", listaDatPrinc);
        
        Template templateCargada = filler.getTemplate("src/main/resources/template_html.vm");
        StringWriter writer = new StringWriter();
