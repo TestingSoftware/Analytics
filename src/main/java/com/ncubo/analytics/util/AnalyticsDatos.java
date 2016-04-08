@@ -36,21 +36,20 @@ public class AnalyticsDatos {
 	 * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
 	 */
 	private final String APPLICATION_NAME = "My Project";
+	private final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"), ".store/analytics_sample");// Directory to store user credentials. 
+	private FileDataStoreFactory dataStoreFactory;
+	private HttpTransport httpTransport;
+	private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+	private Analytics analytics;
+	
 	/**
 	 * Ve a la página que sirve de ayuda que está al inicio, selecciona la vista y en el campo "ids"
 	 * sale el id de la tabla, es el número que está después de "ga:"
 	 */
 	private final String TABLE_ID = "115393683";
 	private String empresaFiltrar;
-
-	/** Directory to store user credentials. */
-	private final java.io.File DATA_STORE_DIR =
-			new java.io.File(System.getProperty("user.home"), ".store/analytics_sample");
-
-	private FileDataStoreFactory dataStoreFactory;
-	private HttpTransport httpTransport;
-	private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-	private Analytics analytics;
+	private String fechaInicio = "2015-01-01";
+	private String fechaFin = "2016-03-28";
 	
 	/**
 	 * This first initializes an analytics service object. It then uses the Google
@@ -67,26 +66,6 @@ public class AnalyticsDatos {
 		httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 		dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
 		analytics = initializeAnalytics();
-	}
-
-	/**
-	 * Tipo business, //TODO esto no debe ir aquí o está mal
-	 * @throws IOException 
-	 */
-	public List<Map<String, String>> obtenerSesionesUsuarios() throws IOException
-	{	
-		GaData gaData = obtenerSesionesUsuarios(analytics);
-		return printGaData(gaData);
-	}
-	
-	/**
-	 * Tipo business, //TODO esto no debe ir aquí o está mal
-	 * @throws IOException 
-	 */
-	public List<Map<String, String>> obtenerDatosPrincipales() throws IOException
-	{	
-		GaData gaData = obtenerDatosPrincipales(analytics);
-		return printGaData(gaData);
 	}
 
 	/** Authorizes the installed application to access user's protected data. */
@@ -128,20 +107,42 @@ public class AnalyticsDatos {
 	 */
 	private GaData obtenerSesionesUsuarios(Analytics analytics) throws IOException {
 		return analytics.data().ga().get("ga:" + TABLE_ID, // Table Id. ga: + profile id.
-				"2015-01-01", // Start date.
-				"2016-03-28", // End date.
+				fechaInicio, // Start date.
+				fechaFin, // End date.
 				"ga:users, ga:sessions") // Metrics.
 				.setDimensions("ga:pagePath")
-				.setFilters("ga:pagepath=~^/UI/"+empresaFiltrar+".*")
+				.setFilters(String.format("ga:pagepath=~^/UI/%s.*", empresaFiltrar))
 				.execute();
 	}
 	
 	private GaData obtenerDatosPrincipales(Analytics analytics) throws IOException {
 		return analytics.data().ga().get("ga:" + TABLE_ID, // Table Id. ga: + profile id.
-				"2015-01-01", // Start date.
-				"2016-03-28", // End date.
+				fechaInicio, // Start date.
+				fechaFin, // End date.
 				"ga:users, ga:sessions, ga:pageviews, ga:avgSessionDuration, ga:bounceRate, ga:percentNewSessions") // Metrics.
-				.setFilters("ga:pagepath=~^/UI/"+empresaFiltrar+".*")
+				.setFilters(String.format("ga:pagepath=~^/UI/%s.*", empresaFiltrar))
+				.execute();
+	}
+	
+	private GaData productoMasVisitado(Analytics analytics) throws IOException {
+		return analytics.data().ga().get("ga:" + TABLE_ID, // Table Id. ga: + profile id.
+				fechaInicio, // Start date.
+				fechaFin, // End date.
+				"ga:pageviews") // Metrics.
+				.setDimensions("ga:pagePath")
+				.setSort("-ga:pageviews")
+				.setFilters(String.format("ga:pagepath=~^/UI/%s.*;ga:pagepath=@producto/", empresaFiltrar))
+				.setMaxResults(1)
+				.execute();
+	}
+	
+	private GaData nuevasVisitasYTotales(Analytics analytics) throws IOException {
+		return analytics.data().ga().get("ga:" + TABLE_ID, // Table Id. ga: + profile id.
+				fechaInicio, // Start date.
+				fechaFin, // End date.
+				"ga:users,ga:newUsers") // Metrics.
+				.setDimensions("ga:country,ga:region")
+				.setFilters(String.format("ga:pagepath=~^/UI/%s.*", empresaFiltrar))
 				.execute();
 	}
 
@@ -165,7 +166,7 @@ public class AnalyticsDatos {
 			for(List<String> fila : results.getRows())
 			{
 				datos = new HashMap<String, String>();
-				for(int i = 0; i < 3; i++)
+				for(int i = 0; i < fila.size(); i++)
 				{
 					datos.put("col" + i, fila.get(i));
 				}
@@ -173,6 +174,34 @@ public class AnalyticsDatos {
 			}
 		}
 		return listValAn;
+	}
+	
+	
+	/********************************tipo negocios*************************************************/
+	public List<Map<String, String>> obtenerSesionesUsuarios() throws IOException
+	{	
+		GaData gaData = obtenerSesionesUsuarios(analytics);
+		return printGaData(gaData);
+	}
+	
+
+	public List<Map<String, String>> obtenerDatosPrincipales() throws IOException
+	{	
+		GaData gaData = obtenerDatosPrincipales(analytics);
+		return printGaData(gaData);
+	}
+	
+	public String productoMasVisitado() throws IOException
+	{	
+		GaData gaData = productoMasVisitado(analytics);
+		String [] pathProductoMasVendido = gaData.getRows().get(0).get(0).split("/");
+		return pathProductoMasVendido[pathProductoMasVendido.length-1];
+	}
+	
+	public List<Map<String, String>> nuevasVisitasYTotales() throws IOException
+	{	
+		GaData gaData = nuevasVisitasYTotales(analytics);
+		return printGaData(gaData);
 	}
 
 }

@@ -11,7 +11,8 @@ public class AnalyticsDatosTest {
 	public void analytics() throws Exception
 	{
 		analytics = new AnalyticsDatos("newBikes/");
-		analytics.obtenerSesionesUsuarios();
+		System.out.println(analytics.obtenerSesionesUsuarios());
+		
 	}
 	
 	@Test
@@ -19,5 +20,19 @@ public class AnalyticsDatosTest {
 	{
 		analytics = new AnalyticsDatos("newBikes/");
 		System.out.println(analytics.obtenerDatosPrincipales());
+	}
+	
+	@Test
+	public void productoMasVendido() throws Exception
+	{
+		analytics = new AnalyticsDatos("newBikes/");
+		System.out.println(analytics.productoMasVisitado());
+	}
+	
+	@Test
+	public void nuevasVisitasYTotales() throws Exception
+	{
+		analytics = new AnalyticsDatos("ferreteriaselmar/");
+		System.out.println(analytics.nuevasVisitasYTotales());
 	}
 }
