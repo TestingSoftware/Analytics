@@ -46,7 +46,7 @@ public class AnalyticsDatos {
 	 * Ve a la página que sirve de ayuda que está al inicio, selecciona la vista y en el campo "ids"
 	 * sale el id de la tabla, es el número que está después de "ga:"
 	 */
-	private final String TABLE_ID = "115393683";
+	private final String TABLE_ID = "117088122";
 	private String empresaFiltrar;
 	private String fechaInicio = "2015-01-01";
 	private String fechaFin = "2016-03-28";
@@ -60,8 +60,8 @@ public class AnalyticsDatos {
 	 */
 	public AnalyticsDatos(String empresaFiltrar) throws Exception
 	{
-		//this.empresaFiltrar = empresaFiltrar;
-		this.empresaFiltrar = "newbikes/";
+		this.empresaFiltrar = empresaFiltrar;
+		//this.empresaFiltrar = "newbikes/";
 		
 		httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 		dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
@@ -141,7 +141,7 @@ public class AnalyticsDatos {
 				fechaInicio, // Start date.
 				fechaFin, // End date.
 				"ga:users,ga:newUsers") // Metrics.
-				.setDimensions("ga:country,ga:region")
+				.setDimensions("ga:country,ga:city")
 				.setFilters(String.format("ga:pagepath=~^/UI/%s.*", empresaFiltrar))
 				.execute();
 	}
@@ -152,7 +152,7 @@ public class AnalyticsDatos {
 	 *
 	 * @param results data returned from the Core Reporting API.
 	 */
-	private List<Map<String, String>> printGaData(GaData results) 
+	private List<Map<String, String>> creaListaGaData(GaData results) 
 	{
 		List<Map<String, String>> listValAn = new ArrayList<Map<String, String>>();
 		Map<String, String> datos = null;
@@ -168,7 +168,7 @@ public class AnalyticsDatos {
 				datos = new HashMap<String, String>();
 				for(int i = 0; i < fila.size(); i++)
 				{
-					datos.put("col" + i, fila.get(i));
+					datos.put("col"+i, fila.get(i));
 				}
 				listValAn.add(datos);
 			}
@@ -181,14 +181,14 @@ public class AnalyticsDatos {
 	public List<Map<String, String>> obtenerSesionesUsuarios() throws IOException
 	{	
 		GaData gaData = obtenerSesionesUsuarios(analytics);
-		return printGaData(gaData);
+		return creaListaGaData(gaData);
 	}
 	
 
 	public List<Map<String, String>> obtenerDatosPrincipales() throws IOException
 	{	
 		GaData gaData = obtenerDatosPrincipales(analytics);
-		return printGaData(gaData);
+		return creaListaGaData(gaData);
 	}
 	
 	public String productoMasVisitado() throws IOException
@@ -201,7 +201,7 @@ public class AnalyticsDatos {
 	public List<Map<String, String>> nuevasVisitasYTotales() throws IOException
 	{	
 		GaData gaData = nuevasVisitasYTotales(analytics);
-		return printGaData(gaData);
+		return creaListaGaData(gaData);
 	}
 
 }
