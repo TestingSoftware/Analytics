@@ -21,51 +21,49 @@
       <div class = "container">
       <B>Estadisticas!</B>
       
-      <br/>
-        Este email es auto generado si desea obtener información puede contactarse con nuestro equipo.
-      <br/>
-    
-      #set( $count = 1 )  
-      <table class = "table table-striped">
-       <tr>
-              <th>Page views</th>
-              <th>Users</th>
-              <th>Sessions</th>
-          </tr>
-        #foreach( $empresa in $empresas )
-          <tr>
-            <td>$empresa.col0</td>
-            <td>$empresa.col1</td>
-            <td>$empresa.col2</td>
-          </tr>
-          #set( $count = $count + 1 )
-        #end
-      </table>
       <br>
+        Nimbus template test.
       <br>
+      <div>
+      <h3>Secci&oacute;n 1</h3>
+        <hr> 
+        <br>
+        <span>Producto m&aacute;s vendido: $productoMasVendido</span>
+      </div>
       
-      #set( $count = 1 )  
-        <table class="table table-striped">
+      <br>
+      <br>
+      <div id="section2">
+        <h3>Secci&oacute;n 2</h3>
+        <hr>
+        <br>
+      </div>
+      
+      <div id="section3">
+        <h3>Secci&oacute;n 3</h3>
+        <hr>
+        <br>
+      </div> 
+
+       <div id="section4">
+        <h3>Secci&oacute;n 4</h3>
+        <hr>
+        <br>
+              <table class="table table-striped">
             <tr>
-                <th>Users</th>
-                <th>Sessions</th>
-                <th>PageViews</th>
-                <th>Avg Session Duration</th>
-                <th>Bounce Rate</th>
-                <th>%New Sessions</th>
+                <th>Pais</th>
+                <th>Provincia</th>
+                <th>Usuarios</th>
             </tr>
-            #foreach($dato in $datosResumen)
+            #foreach($usuario in $usuariosPais)
             <tr>
-                <td>$dato.col0</td>
-                <td>$dato.col1</td>
-                <td>$dato.col2</td>
-                <td>$dato.col3</td>
-                <td>$dato.col4</td>
-                <td>$dato.col5</td>
+                <td>$usuario.col0</td>
+                <td>$usuario.col1</td>
+                <td>$usuario.col2</td>
             </tr>
-            #set( $count = $count + 1 )
             #end
         </table>
+      </div> 
       </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
