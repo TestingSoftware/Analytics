@@ -35,4 +35,11 @@ public class AnalyticsDatosTest {
 		analytics = new AnalyticsDatos("ferreteriaselmar/");
 		System.out.println(analytics.nuevasVisitasYTotales());
 	}
+	
+	@Test
+	public void visitasTotales() throws Exception
+	{
+		analytics = new AnalyticsDatos("ferreteriaselmar/");
+		System.out.println(analytics.visitasTotales());
+	}
 }

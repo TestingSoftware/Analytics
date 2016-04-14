@@ -141,7 +141,16 @@ public class AnalyticsDatos {
 				fechaInicio, // Start date.
 				fechaFin, // End date.
 				"ga:users,ga:newUsers") // Metrics.
-				.setDimensions("ga:country,ga:region")
+				.setDimensions("ga:country,ga:city")
+				.setFilters(String.format("ga:pagepath=~^/UI/%s.*", empresaFiltrar))
+				.execute();
+	}
+	
+	private GaData visitasTotales(Analytics analytics) throws IOException {
+		return analytics.data().ga().get("ga:" + TABLE_ID, // Table Id. ga: + profile id.
+				fechaInicio, // Start date.
+				fechaFin, // End date.
+				"ga:users") // Metrics.
 				.setFilters(String.format("ga:pagepath=~^/UI/%s.*", empresaFiltrar))
 				.execute();
 	}
@@ -176,7 +185,14 @@ public class AnalyticsDatos {
 		return listValAn;
 	}
 	
-	
+	public void setFechaInicio(String fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public void setFechaFin(String fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
 	/********************************tipo negocios*************************************************/
 	public List<Map<String, String>> obtenerSesionesUsuarios() throws IOException
 	{	
@@ -194,6 +210,10 @@ public class AnalyticsDatos {
 	public String productoMasVisitado() throws IOException
 	{	
 		GaData gaData = productoMasVisitado(analytics);
+		if (gaData.getRows() == null || gaData.getRows().isEmpty())
+		{
+			return "";
+		}
 		String [] pathProductoMasVendido = gaData.getRows().get(0).get(0).split("/");
 		return pathProductoMasVendido[pathProductoMasVendido.length-1];
 	}
@@ -202,6 +222,16 @@ public class AnalyticsDatos {
 	{	
 		GaData gaData = nuevasVisitasYTotales(analytics);
 		return printGaData(gaData);
+	}
+	
+	public int visitasTotales() throws IOException
+	{	
+		GaData gaData = visitasTotales(analytics);
+		if (gaData.getRows() == null || gaData.getRows().isEmpty())
+		{
+			return 0;
+		}
+		return Integer.parseInt(gaData.getRows().get(0).get(0));
 	}
 
 }
