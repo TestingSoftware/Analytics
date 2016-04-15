@@ -46,7 +46,7 @@ public class AnalyticsDatos {
 	 * Ve a la página que sirve de ayuda que está al inicio, selecciona la vista y en el campo "ids"
 	 * sale el id de la tabla, es el número que está después de "ga:"
 	 */
-	private final String TABLE_ID = "117088122";
+	private final String TABLE_ID = "115393683";
 	private String empresaFiltrar;
 	private String fechaInicio = "2015-01-01";
 	private String fechaFin = "2016-03-28";

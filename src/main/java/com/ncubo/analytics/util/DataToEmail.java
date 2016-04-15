@@ -10,7 +10,11 @@ import java.util.Map;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.json.JSONObject;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.ncubo.analitycs.configuracion.Configuracion;
 
 /**
@@ -37,9 +41,17 @@ public class DataToEmail
        String productoMasVendido = analitycsData.productoMasVisitado();
        listaUsuarisoPais = analitycsData.nuevasVisitasYTotales();
        VelocityContext context = new VelocityContext();
-
-       context.put("productoMasVendido", productoMasVendido);
+       //TODO Cambiar el nombre de la empresa por una que esté en Prod, Cambiar el ID producto.
+       Rest rest = new Rest(empresaPorFiltrar);
+       JsonObject jsonObject = rest.obtenerProducto(productoMasVendido);
+       String image = jsonObject.get("UrlImageneMayorPrioridad").toString().replace('"', ' ').trim();
+       image = String.format(new Configuracion().getImagenNimbus(), "RepoQA",image);
+       
+       context.put("imagenProdMasVis", image);
+       context.put("nombreDetallado", jsonObject.get("NombreDetallado").toString().replace('"', ' '));
+       context.put("descripcion", jsonObject.get("Descripcion").toString().replace('"', ' '));
        context.put("usuariosPais", listaUsuarisoPais);
+       context.put("visitasTotales", analitycsData.visitasTotales());
 
        Template templateCargada = filler.getTemplate(new Configuracion().getTEMPLATE_URL());
        StringWriter writer = new StringWriter();
