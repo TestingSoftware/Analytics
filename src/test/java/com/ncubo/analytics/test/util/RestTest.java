@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 
 import org.testng.annotations.Test;
 
+import com.google.gson.JsonObject;
 import com.ncubo.analytics.util.Rest;
 
 public class RestTest {
@@ -14,6 +15,7 @@ public class RestTest {
 	@Test
 	public void Rest() throws MalformedURLException, IOException
 	{
-		rest.obtenerProducto("producto2");
+		JsonObject object =  rest.obtenerProducto("producto2");
+		System.out.println(object.toString());
 	}
 }

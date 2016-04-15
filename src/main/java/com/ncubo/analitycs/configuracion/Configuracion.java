@@ -9,6 +9,7 @@ public class Configuracion
 	private final String TEMPLATE_URL;
 	private final String GENERATED_TEMPLATE;
 	private final String REST_PRODUCTO_NIMBUS;
+	private final String REST_PRODUCTO_MAS_VENDIDO_NIMBUS;
 
 	public String getTEMPLATE_URL() 
 	{
@@ -25,6 +26,11 @@ public class Configuracion
 		return REST_PRODUCTO_NIMBUS.toString();
 	}
 	
+	public String productoMasVendidoNimbus() 
+	{
+		return REST_PRODUCTO_MAS_VENDIDO_NIMBUS.toString();
+	}
+	
 	/**
 	 * Este constructor se encarga de inicializar las constantes presentes en el archivo .properties
 	 * y cuya principal finalidad es obtener parametros previamente definidos para la aplicación.
@@ -38,5 +44,6 @@ public class Configuracion
 		this.TEMPLATE_URL = propiedades.getProperty("template_url");
 		this.GENERATED_TEMPLATE = propiedades.getProperty("generated_template");
 		this.REST_PRODUCTO_NIMBUS = propiedades.getProperty("rest_producto_nimbus");
+		this.REST_PRODUCTO_MAS_VENDIDO_NIMBUS = propiedades.getProperty("rest_producto_mas_vendido_nimbus");
 	}
 }

@@ -14,12 +14,14 @@ import com.ncubo.analitycs.configuracion.Configuracion;
 public class Rest {
 	
 	private String empresa;
+	private final String ETIQUETA_REST = "productoParaLaVenta";
+	private final String EMAIL_REST = "jullyad@hotmail.com";
 	
 	public Rest(String empresa) {
 		this.empresa = empresa;
 	}
 	
-	private BufferedReader conectarRest(String producto, String urlRest) throws MalformedURLException, IOException
+	private BufferedReader conectarRest(String urlRest) throws MalformedURLException, IOException
 	{	
 		URL url = new URL(urlRest);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -36,8 +38,7 @@ public class Rest {
 	
 	public JsonObject obtenerProducto(String producto) throws MalformedURLException, IOException
 	{
-		BufferedReader br = conectarRest(producto, 
-				String.format(new Configuracion().productoNimbus(), empresa, producto));
+		BufferedReader br = conectarRest(String.format(new Configuracion().productoNimbus(), empresa, producto));
 		String output;
 		StringBuilder json = new StringBuilder();
 		
@@ -45,7 +46,24 @@ public class Rest {
 		{
 			json.append(output);
 		}
-		return (new JsonParser()).parse(json.toString()).getAsJsonObject();
+		
+		JsonObject objetoJson = (new JsonParser()).parse(json.toString()).getAsJsonObject();//convierte el string a objeto Json
+		return objetoJson.get(ETIQUETA_REST).getAsJsonObject();//sirve para que cuando se llame este método solo se tenga que hacer .get("etiqueta")
+	}
+	
+	public JsonObject obtenerProductoMasVendido(String fechaInicio, String fechaFin) throws MalformedURLException, IOException
+	{
+		BufferedReader br = conectarRest(String.format(new Configuracion().productoNimbus(), fechaInicio, fechaFin, EMAIL_REST));
+		String output;
+		StringBuilder json = new StringBuilder();
+		
+		while ((output = br.readLine()) != null) 
+		{
+			json.append(output);
+		}
+		
+		JsonObject objetoJson = (new JsonParser()).parse(json.toString()).getAsJsonObject();//convierte el string a objeto Json
+		return obtenerProducto(objetoJson.get("producto").getAsString());//obtiene el nombre del producto mas vendido del Json y lo envia al metodo obtener producto
 	}
 
 }
