@@ -9,7 +9,13 @@ public class Configuracion
 	private final String TEMPLATE_URL;
 	private final String GENERATED_TEMPLATE;
 	private final String REST_PRODUCTO_NIMBUS;
-
+	private final String REST_IMAGENES_NIMBUS;
+	
+	public String getImagenNimbus()
+	{
+		return REST_IMAGENES_NIMBUS;
+	}
+	
 	public String getTEMPLATE_URL() 
 	{
 		return TEMPLATE_URL.toString();
@@ -38,5 +44,6 @@ public class Configuracion
 		this.TEMPLATE_URL = propiedades.getProperty("template_url");
 		this.GENERATED_TEMPLATE = propiedades.getProperty("generated_template");
 		this.REST_PRODUCTO_NIMBUS = propiedades.getProperty("rest_producto_nimbus");
+		this.REST_IMAGENES_NIMBUS = propiedades.getProperty("rest_imagenes_nimbus");
 	}
 }

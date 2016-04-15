@@ -12,9 +12,8 @@ import com.google.gson.JsonParser;
 import com.ncubo.analitycs.configuracion.Configuracion;
 
 public class Rest {
-	
 	private String empresa;
-	
+	private final String ETIQUETA_REST = "productoParaLaVenta";
 	public Rest(String empresa) {
 		this.empresa = empresa;
 	}
@@ -45,7 +44,7 @@ public class Rest {
 		{
 			json.append(output);
 		}
-		return (new JsonParser()).parse(json.toString()).getAsJsonObject();
+		return (new JsonParser()).parse(json.toString()).getAsJsonObject().get(ETIQUETA_REST).getAsJsonObject();
 	}
 
 }
