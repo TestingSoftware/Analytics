@@ -25,7 +25,7 @@
 	Nimbus template test.
 	<br>
 
-	#if ($visitasTotales != "0")
+	#if ($visitasTotales > 0)
 	<div id="visitas-totales">
 		<h3>Visitas Totales</h3>
 		<hr>
