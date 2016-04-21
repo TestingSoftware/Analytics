@@ -170,17 +170,15 @@ public class AnalyticsDatos {
 		{
 			return listValAn;
 		}
-		else
+
+		for(List<String> fila : results.getRows())
 		{
-			for(List<String> fila : results.getRows())
+			datos = new HashMap<String, String>();
+			for(int i = 0; i < fila.size(); i++)
 			{
-				datos = new HashMap<String, String>();
-				for(int i = 0; i < fila.size(); i++)
-				{
-					datos.put("col"+i, fila.get(i));
-				}
-				listValAn.add(datos);
+				datos.put("col"+i, fila.get(i));
 			}
+			listValAn.add(datos);
 		}
 		return listValAn;
 	}

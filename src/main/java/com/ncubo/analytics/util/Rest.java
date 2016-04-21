@@ -46,14 +46,13 @@ public class Rest {
 		{
 			json.append(output);
 		}
-		
 		JsonObject objetoJson = (new JsonParser()).parse(json.toString()).getAsJsonObject();//convierte el string a objeto Json
 		return objetoJson.get(ETIQUETA_REST).getAsJsonObject();//sirve para que cuando se llame este método solo se tenga que hacer .get("etiqueta")
 	}
 	
-	public JsonObject obtenerProductoMasVendido(String fechaInicio, String fechaFin) throws MalformedURLException, IOException
+	public String obtenerProductoMasVendido(String fechaInicio, String fechaFin) throws MalformedURLException, IOException
 	{
-		BufferedReader br = conectarRest(String.format(new Configuracion().productoNimbus(), fechaInicio, fechaFin, EMAIL_REST));
+		BufferedReader br = conectarRest(String.format(new Configuracion().productoMasVendidoNimbus(), fechaInicio, fechaFin, EMAIL_REST));
 		String output;
 		StringBuilder json = new StringBuilder();
 		
@@ -63,7 +62,9 @@ public class Rest {
 		}
 		
 		JsonObject objetoJson = (new JsonParser()).parse(json.toString()).getAsJsonObject();//convierte el string a objeto Json
-		return obtenerProducto(objetoJson.get("producto").getAsString());//obtiene el nombre del producto mas vendido del Json y lo envia al metodo obtener producto
+		//return obtenerProducto(objetoJson.get("monto").getAsString());//obtiene el nombre del producto mas vendido del Json y lo envia al metodo obtener producto
+		//returns  JsonObject
+		return objetoJson.get("monto").getAsString();
 	}
 
 }

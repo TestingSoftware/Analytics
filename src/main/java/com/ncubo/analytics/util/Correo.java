@@ -27,7 +27,7 @@ public class Correo {
 	
 	public void enviarCorreo() throws AddressException, MessagingException, IOException
 	{
-		String para = "v.centeno15@gmail.com";
+		String para = "dalaianxd@gmail.com";
 		String copiaA = "vcenteno@cecropiasolutions.com";
 		String emailBody = getTemplate();
 		
